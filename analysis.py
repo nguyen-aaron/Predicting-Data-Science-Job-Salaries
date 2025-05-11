@@ -56,22 +56,22 @@ pdf = df_filtered.select("location", "salary").toPandas()
 # Plot
 plt.figure(figsize=(12, 6))
 sns.boxplot(data=pdf, x="location", y="salary")
-plt.title("Salary Distribution by Job Location (Top 10)")
+plt.title("Salary Distribution by Most Popular Job Locations")
+plt.xlabel("Location") 
+plt.ylabel("Salary") 
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
 
 
-# Heatmap
 
-# experience_level_mapping = {'Entry': 1, 'Mid': 2, 'Senior': 3}
-# df_pd['Experience_Level_Num'] = df_pd['experience_level'].map(experience_level_mapping)
+# Convert to Pandas (if using PySpark)
+pdf = df.select("salary").dropna().toPandas()
 
-# # Calculate the correlation between Experience Level and Salary
-# correlation_matrix = df_pd[['Experience_Level_Num', 'salary']].corr()
-
-# # Plotting the heatmap
-# plt.figure(figsize=(8, 6))
-# sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt='.2f')
-# plt.title('Correlation Heatmap: Experience Level vs Salary')
-# plt.show()
+plt.figure(figsize=(10, 6))
+sns.histplot(pdf["salary"], bins=30, kde=True)  # Add kde=True for a smooth curve
+plt.title("Distribution of All Salaries")
+plt.xlabel("Salary (USD)")
+plt.ylabel("Frequency")
+plt.tight_layout()
+plt.show()
