@@ -17,13 +17,6 @@ df = df.dropDuplicates()  # Drop duplicate rows
 # Convert to Pandas DataFrame
 df_pd = df.toPandas()
 
-print("Metadata of the dataset:")
-print("Number of entries:\n", df.count())
-print("Features:")
-df.printSchema()
-print("Metadata:\n")
-df.describe().show()
-
 
 
 df = df.select(
@@ -34,6 +27,13 @@ df = df.select(
     col("salary_currency"),
     col("salary").cast("double")
 ).filter(col("salary_currency") == "USD")
+
+print("Metadata of the dataset:")
+print("Number of entries:\n", df.count())
+print("Features:")
+df.printSchema()
+print("Metadata:\n")
+df.describe().show()
 
 #Violin/Box Plot
 
@@ -65,12 +65,13 @@ plt.show()
 
 
 
-# Convert to Pandas (if using PySpark)
+# Histogram of salary distribution
 pdf = df.select("salary").dropna().toPandas()
 
+# Plot
 plt.figure(figsize=(10, 6))
-sns.histplot(pdf["salary"], bins=30, kde=True)  # Add kde=True for a smooth curve
-plt.title("Distribution of All Salaries")
+sns.histplot(pdf["salary"], bins=30, kde=True)
+plt.title("Salary Distribution")
 plt.xlabel("Salary (USD)")
 plt.ylabel("Frequency")
 plt.tight_layout()
